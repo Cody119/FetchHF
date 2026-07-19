@@ -1,11 +1,12 @@
-{ lib
-, runCommand
-, writeShellApplication
-, python3Packages
-, cacert
-, coreutils
-, nix
-, nixpkgsPath
+{
+  lib,
+  runCommand,
+  writeShellApplication,
+  python3Packages,
+  cacert,
+  coreutils,
+  nix,
+  nixpkgsPath,
 }:
 
 let
@@ -35,8 +36,7 @@ let
   #   }
   #
   # That output can be pasted directly into fetchHF.
-  storeNameFor = repo: file:
-    lib.strings.sanitizeDerivationName "${repo}-${file}";
+  storeNameFor = repo: file: lib.strings.sanitizeDerivationName "${repo}-${file}";
 
   hfCli = "${python3Packages.huggingface-hub}/bin/hf";
 
@@ -66,19 +66,22 @@ let
   '';
 
   fetchHF =
-    { repo
-    , file
-    , sha256
-    , rev ? "main"
+    {
+      repo,
+      file,
+      sha256,
+      rev ? "main",
     }:
-    runCommand (storeNameFor repo file) {
-      nativeBuildInputs = [ python3Packages.huggingface-hub ];
+    runCommand (storeNameFor repo file)
+      {
+        nativeBuildInputs = [ python3Packages.huggingface-hub ];
 
-      # This fetcher produces a single file at $out, so flat hashing is correct.
-      outputHashMode = "flat";
-      outputHashAlgo = "sha256";
-      outputHash = sha256;
-    } ''
+        # This fetcher produces a single file at $out, so flat hashing is correct.
+        outputHashMode = "flat";
+        outputHashAlgo = "sha256";
+        outputHash = sha256;
+      }
+      ''
         set -euo pipefail
 
         repo="${repo}"
@@ -101,7 +104,11 @@ let
 
   prefetchHF = writeShellApplication {
     name = "prefetchHF";
-    runtimeInputs = [ coreutils nix python3Packages.huggingface-hub ];
+    runtimeInputs = [
+      coreutils
+      nix
+      python3Packages.huggingface-hub
+    ];
     meta = {
       description = "Prefetch a single file from a Hugging Face model repo for fetchHF.";
       mainProgram = "prefetchHF";

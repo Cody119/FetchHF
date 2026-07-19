@@ -1,5 +1,6 @@
-{ nixpkgs ? import ../nixpkgs-pin.nix
-, pkgs ? import nixpkgs { }
+{
+  nixpkgs ? import ../nixpkgs-pin.nix,
+  pkgs ? import nixpkgs { },
 }:
 let
   api = import ../default.nix { inherit pkgs; };
@@ -14,9 +15,9 @@ pkgs.lib.runTests {
 
   flatFixedOutput = {
     expr = {
-      outputHashMode = drv.outputHashMode;
-      outputHashAlgo = drv.outputHashAlgo;
-      outputHash = drv.outputHash;
+      inherit (drv) outputHashMode;
+      inherit (drv) outputHashAlgo;
+      inherit (drv) outputHash;
     };
     expected = {
       outputHashMode = "flat";
@@ -27,14 +28,19 @@ pkgs.lib.runTests {
 
   roundTripFixtureFields = {
     expr = builtins.attrNames fixture;
-    expected = [ "file" "repo" "rev" "sha256" ];
+    expected = [
+      "file"
+      "repo"
+      "rev"
+      "sha256"
+    ];
   };
 
   roundTripFixturePinsSmallFile = {
     expr = {
-      repo = fixture.repo;
-      file = fixture.file;
-      rev = fixture.rev;
+      inherit (fixture) repo;
+      inherit (fixture) file;
+      inherit (fixture) rev;
     };
     expected = {
       repo = "openai-community/gpt2";

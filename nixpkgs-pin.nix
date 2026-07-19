@@ -4,8 +4,8 @@ let
 in
 fetchTree {
   type = "github";
-  owner = nixpkgs.owner;
-  repo = nixpkgs.repo;
-  rev = nixpkgs.rev;
-  narHash = nixpkgs.narHash;
+  inherit (nixpkgs) owner;
+  inherit (nixpkgs) repo;
+  inherit (nixpkgs) rev;
+  inherit (nixpkgs) narHash;
 }

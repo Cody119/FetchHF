@@ -1,5 +1,6 @@
-{ nixpkgs ? import ../nixpkgs-pin.nix
-, pkgs ? import nixpkgs { }
+{
+  nixpkgs ? import ../nixpkgs-pin.nix,
+  pkgs ? import nixpkgs { },
 }:
 let
   api = import ../default.nix { inherit pkgs; };
