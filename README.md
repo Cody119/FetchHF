@@ -1,6 +1,6 @@
 # FetchHF
 
-Small Nix helpers for fetching a single file from a Hugging Face model repository and for prefetching the fixed-output hash needed to pin it.
+Small Nix helpers for fetching a single file from a Hugging Face model repository and for prefetching the fixed-output hash needed to pin it. Both use the hf cli instead of builtin fetching functions as it is generally more performant.
 
 The flake and non-flake entrypoints share the same resolved `nixpkgs` pin via `flake.lock`; `default.nix` reads that lock for its default `pkgs` import.
 
