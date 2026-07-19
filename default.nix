@@ -1,4 +1,4 @@
-{ nixpkgs ? <nixpkgs>
+{ nixpkgs ? import ./nixpkgs-pin.nix
 , pkgs ? import nixpkgs { }
 }:
 
