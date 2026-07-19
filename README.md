@@ -1,4 +1,4 @@
-# FastDownloader
+# FetchHF
 
 Small Nix helpers for fetching a single file from a Hugging Face model repository and for prefetching the fixed-output hash needed to pin it.
 
